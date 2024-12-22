@@ -1,0 +1,6 @@
+1. open cmd and paste [git clone https://github.com/x6galixia/SNA-QUIZ.git]
+2. open tthe it on vscode and in the terminal run [npm i]
+3. open your pgadmin and create a database name[education_db] in security add a previllage [grantee: postgres previllage: all]
+4. download the backup HERE: https://drive.google.com/drive/folders/16qdeHQBwynWIRgXVR8XgTMBhd8Q_1JrK?usp=drive_link
+5. go back to pgadmin click the database name [education_db] right click then click restore and chose the file you downloaded from the drive_link
+6. go to vscode and in the terminal run the command [npm start]
