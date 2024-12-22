@@ -199,6 +199,32 @@ app.post('/quiz/:id/submit', async (req, res) => {
     res.send(`Your score is ${score} out of ${questions.rows.length}`);
 });
 
+app.post('/teacher/delete-quiz/:id', async (req, res) => {
+    if (req.session.role !== 'teacher') return res.redirect('/');
+
+    const quizId = req.params.id;
+
+    try {
+        // Start a transaction to ensure atomicity
+        await pool.query('BEGIN');
+
+        // Delete associated questions
+        await pool.query('DELETE FROM questions WHERE quiz_id = $1', [quizId]);
+
+        // Delete the quiz
+        await pool.query('DELETE FROM quizzes WHERE id = $1 AND teacher_id = $2', [quizId, req.session.userId]);
+
+        // Commit the transaction
+        await pool.query('COMMIT');
+
+        res.redirect('/teacher/dashboard');
+    } catch (error) {
+        // Roll back in case of any errors
+        await pool.query('ROLLBACK');
+        console.error('Error deleting quiz:', error);
+        res.status(500).send('An error occurred while deleting the quiz.');
+    }
+});
 
 
 app.get('/quiz/:id/retake', (req, res) => {
