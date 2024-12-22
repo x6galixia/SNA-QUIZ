@@ -139,7 +139,6 @@ app.post('/teacher/add-quiz', async (req, res) => {
     res.redirect('/teacher/dashboard');
 });
 
-// Route to view a specific quiz
 app.get('/quiz/:id', async (req, res) => {
     const quizId = req.params.id;
     
@@ -154,49 +153,55 @@ app.get('/quiz/:id', async (req, res) => {
     res.render('quiz', { quiz: quiz.rows[0], questions: questions.rows });
 });
 
-
 app.post('/quiz/:id/submit', async (req, res) => {
     const quizId = req.params.id;
     const userAnswers = req.body;
 
-    // Fetch questions for the quiz
-    const questions = await pool.query('SELECT * FROM questions WHERE quiz_id = $1', [quizId]);
+    try {
+        // Fetch questions for the quiz
+        const questions = await pool.query('SELECT * FROM questions WHERE quiz_id = $1', [quizId]);
 
-    let score = 0;
-    questions.rows.forEach((question, index) => {
-        if (userAnswers[`question${index}`] === question.correct_answer) {
-            score++;
-        }
-    });
+        let score = 0;
+        const resultDetails = questions.rows.map((question, index) => {
+            const isCorrect = userAnswers[`question${index}`] === question.correct_answer;
+            if (isCorrect) score++;
+            return {
+                question_text: question.question_text,
+                userAnswer: userAnswers[`question${index}`],
+                correctAnswer: question.correct_answer,
+                isCorrect,
+                options: {
+                    a: question.option_a,
+                    b: question.option_b,
+                    c: question.option_c,
+                    d: question.option_d,
+                },
+            };
+        });
 
-    // Get the current highest attempt number for this student and quiz
-    const result = await pool.query(
-        'SELECT MAX(attempt_number) AS max_attempt FROM scores WHERE student_id = $1 AND quiz_id = $2',
-        [req.session.userId, quizId]
-    );
-    const maxAttempt = result.rows[0].max_attempt || 0;  // Default to 0 if no previous attempts
-
-    // Check if a score already exists for this student and quiz
-    const existingScore = await pool.query(
-        'SELECT * FROM scores WHERE student_id = $1 AND quiz_id = $2 AND attempt_number = $3',
-        [req.session.userId, quizId, maxAttempt + 1]
-    );
-
-    if (existingScore.rows.length > 0) {
-        // Update the score for the existing entry
-        await pool.query(
-            'UPDATE scores SET score = $1 WHERE student_id = $2 AND quiz_id = $3 AND attempt_number = $4',
-            [score, req.session.userId, quizId, maxAttempt + 1]
+        // Get the current highest attempt number for this student and quiz
+        const maxAttemptResult = await pool.query(
+            'SELECT MAX(attempt_number) AS max_attempt FROM scores WHERE student_id = $1 AND quiz_id = $2',
+            [req.session.userId, quizId]
         );
-    } else {
-        // Insert a new score with the next attempt number
+        const maxAttempt = maxAttemptResult.rows[0].max_attempt || 0; // Default to 0 if no attempts
+
+        // Insert the new attempt's score
         await pool.query(
             'INSERT INTO scores (student_id, quiz_id, score, attempt_number) VALUES ($1, $2, $3, $4)',
             [req.session.userId, quizId, score, maxAttempt + 1]
         );
-    }
 
-    res.send(`Your score is ${score} out of ${questions.rows.length}`);
+        // Render the results page
+        res.render('quiz_results', {
+            score,
+            totalQuestions: questions.rows.length,
+            resultDetails,
+        });
+    } catch (error) {
+        console.error('Error submitting quiz:', error);
+        res.status(500).send('An error occurred while processing your submission.');
+    }
 });
 
 app.post('/teacher/delete-quiz/:id', async (req, res) => {
@@ -226,7 +231,6 @@ app.post('/teacher/delete-quiz/:id', async (req, res) => {
     }
 });
 
-
 app.get('/quiz/:id/retake', (req, res) => {
     const quizId = req.params.id;
 
@@ -245,8 +249,6 @@ app.get('/quiz/:id/retake', (req, res) => {
         });
     });
 });
-
-
 
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
