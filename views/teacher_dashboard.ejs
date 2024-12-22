@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teacher Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, Teacher!</h1>
+    <h2>Your Quizzes and Students' Scores</h2>
+
+    <% quizScores.forEach(({ quiz, latestScores }) => { %>
+        <h3><%= quiz.title %></h3>
+        <ul>
+            <% latestScores.forEach(({ student, score, attempt_number }) => { %>
+                <li>
+                    <%= student.fullname %> - 
+                    <% if (score !== null) { %>
+                        <%= score %> (Attempt <%= attempt_number %>)
+                    <% } else { %>
+                        Not Attempted
+                    <% } %>
+                </li>
+            <% }) %>
+        </ul>
+    <% }) %>
+
+    <a href="/teacher/add-quiz">Add Quiz</a>
+    <a href="/logout">Logout</a>
+</body>
+</html>

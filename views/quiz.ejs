@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= quiz.title %></title>
+</head>
+<body>
+    <h1><%= quiz.title %></h1>
+    <form action="/quiz/<%= quiz.id %>/submit" method="POST">
+        <% questions.forEach((question, index) => { %>
+            <div>
+                <p><%= question.question_text %></p>
+                <label><input type="radio" name="question<%= index %>" value="A"> <%= question.option_a %></label><br>
+                <label><input type="radio" name="question<%= index %>" value="B"> <%= question.option_b %></label><br>
+                <label><input type="radio" name="question<%= index %>" value="C"> <%= question.option_c %></label><br>
+                <label><input type="radio" name="question<%= index %>" value="D"> <%= question.option_d %></label><br>
+            </div>
+        <% }) %>
+        <button type="submit">Submit</button>
+    </form>    
+
+    <a href="/student/dashboard">Back to Dashboard</a>
+    <a href="/logout">Logout</a>
+</body>
+</html>
