@@ -213,6 +213,9 @@ app.post('/teacher/delete-quiz/:id', async (req, res) => {
         // Start a transaction to ensure atomicity
         await pool.query('BEGIN');
 
+        // Delete associated scores
+        await pool.query('DELETE FROM scores WHERE quiz_id = $1', [quizId]);
+
         // Delete associated questions
         await pool.query('DELETE FROM questions WHERE quiz_id = $1', [quizId]);
 
