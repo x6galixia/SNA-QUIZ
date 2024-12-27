@@ -23,7 +23,7 @@
                     <li>
                         <%= student.fullname %> - 
                         <% if (score !== null) { %>
-                            <%= score %> (Attempt <%= attempt_number %>)
+                            <%= score %> / <%= totalQuestionsMap.get(quiz.id) %> (Attempt <%= attempt_number %>)
                         <% } else { %>
                             Not Attempted
                         <% } %>

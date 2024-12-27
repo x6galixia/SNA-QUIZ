@@ -16,7 +16,10 @@
                 <li>
                     <span><%= quiz.title %></span>
                     <% if (scoresMap.has(quiz.id)) { %>
-                        <span>Score: <%= scoresMap.get(quiz.id).score %> (Attempt <%= scoresMap.get(quiz.id).attemptNumber %>)</span>
+                        <span>
+                            <%= scoresMap.get(quiz.id).score %> / <%= totalQuestionsMap.get(quiz.id) %>
+                            (Attempt <%= scoresMap.get(quiz.id).attemptNumber %>)
+                        </span>
                         <a href="/quiz/<%= quiz.id %>/retake">Retake Quiz</a>
                     <% } else { %>
                         <span>Not Attempted</span>
@@ -27,7 +30,7 @@
         </ul>
     </div>
     <div class="logout">
-        <a href="/logout">Logout</a>
+        <button onclick="window.location.href='/logout';">Logout</button>
     </div>
     <footer>
         &copy; 2024 Group 1 System & Network Administration. All Rights Reserved.

@@ -72,6 +72,19 @@ app.get('/teacher/dashboard', async (req, res) => {
     // Fetch all quizzes that the teacher has created
     const quizzes = await pool.query('SELECT * FROM quizzes WHERE teacher_id = $1', [teacherId]);
 
+    // Fetch the total number of questions per quiz
+    const quizQuestionsCount = await pool.query(
+        `SELECT quiz_id, COUNT(*) AS total_questions
+         FROM questions
+         GROUP BY quiz_id`
+    );
+
+    // Map quiz question counts for easy lookup
+    const totalQuestionsMap = new Map();
+    quizQuestionsCount.rows.forEach(row => {
+        totalQuestionsMap.set(row.quiz_id, row.total_questions);
+    });
+
     // Fetch the latest score for each student and quiz
     const quizScores = await Promise.all(quizzes.rows.map(async (quiz) => {
         const scores = await pool.query(
@@ -93,10 +106,11 @@ app.get('/teacher/dashboard', async (req, res) => {
         return { quiz, latestScores };
     }));
 
-    // Render the teacher dashboard with the quiz data and teacher name
+    // Render the teacher dashboard with the quiz data, teacher name, and total questions
     res.render('teacher_dashboard', {
         teacherName: teacher.rows[0]?.fullname || 'Teacher',
-        quizScores
+        quizScores,
+        totalQuestionsMap
     });
 });
 
@@ -120,16 +134,32 @@ app.get('/student/dashboard', async (req, res) => {
         [studentId]
     );
 
-    // Map quiz scores for easy lookup
+    // Fetch total number of questions per quiz
+    const quizQuestionsCount = await pool.query(
+        `SELECT quiz_id, COUNT(*) AS total_questions
+         FROM questions
+         GROUP BY quiz_id`
+    );
+
+    // Map quiz scores and questions count for easy lookup
     const scoresMap = new Map();
     quizScores.rows.forEach(score => {
-        scoresMap.set(score.quiz_id, { score: score.score, attemptNumber: score.attempt_number });
+        scoresMap.set(score.quiz_id, {
+            score: score.score,
+            attemptNumber: score.attempt_number
+        });
+    });
+
+    const totalQuestionsMap = new Map();
+    quizQuestionsCount.rows.forEach(row => {
+        totalQuestionsMap.set(row.quiz_id, row.total_questions);
     });
 
     res.render('student_dashboard', {
         studentName: student.rows[0]?.fullname || 'Student',
         quizzes: quizzes.rows,
         scoresMap,
+        totalQuestionsMap
     });
 });
 
