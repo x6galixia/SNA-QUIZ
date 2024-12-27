@@ -1,26 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
+    <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>Signup</h1>
-    <form action="/signup" method="post">
-        <label for="fullname">Full Name:</label>
-        <input type="text" name="fullname" id="fullname" required>
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-        <label for="role">Role:</label>
-        <select name="role" id="role">
-            <option value="teacher">Teacher</option>
-            <option value="student">Student</option>
-        </select>
-        <label for="year_section">Year & Section (Students Only):</label>
-        <input type="text" name="year_section" id="year_section">
-        <button type="submit">Signup</button>
-    </form>
-    <p>Already have an account? <a href="/">Login here</a></p>
+    <div class="wrapper">
+        <h1>Sign Up</h1>
+        <form action="/signup" method="post">
+            <div class="input-field">
+                <i class="fas fa-user"></i>
+                <input type="text" name="fullname" id="fullname" required>
+                <label for="fullname">Full Name</label>
+            </div>
+            <div class="input-field">
+                <i class="fas fa-at"></i>
+                <input type="text" name="username" id="username" required>
+                <label for="username">Username</label>
+            </div>
+            <div class="input-field">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" id="password" required>
+                <label for="password">Password</label>
+            </div>
+            <div class="input-field">
+                <i class="fas fa-user-tag"></i>
+                <select name="role" id="role" required>
+                    <option value="" disabled selected>Select Role</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="student">Student</option>
+                </select>
+                <label for="role">Role</label>
+            </div>
+            <div class="input-field">
+                <i class="fas fa-graduation-cap"></i>
+                <input type="text" name="year_section" id="year_section">
+                <label for="year_section">Year & Section (Students Only)</label>
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p class="register">Already have an account? <a href="/">Login here</a></p>
+    </div>
 </body>
 </html>

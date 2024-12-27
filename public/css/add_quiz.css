@@ -1,0 +1,251 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(120deg, #2980b9, #8e44ad);
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.nav-menu {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.nav-menu a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.nav-menu a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.form-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}
+
+.question {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.question:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.question h3 {
+    color: #2980b9;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+}
+
+input[type="text"], select {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #2980b9;
+    box-shadow: 0 0 0 2px rgba(41, 128, 185, 0.1);
+    outline: none;
+}
+
+.input-field {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.input-field input, 
+.input-field select {
+    width: 100%;
+    height: 45px;
+    padding: 12px 15px 12px 50px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.input-field label {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #666;
+    transition: all 0.3s ease;
+    background: transparent;
+    padding: 0 5px;
+}
+
+.input-field input:focus,
+.input-field select:focus {
+    border-color: #2980b9;
+}
+
+.input-field input:focus ~ label,
+.input-field input:valid ~ label,
+.input-field select:focus ~ label,
+.input-field select:valid ~ label {
+    top: -10px;
+    left: 15px;
+    font-size: 12px;
+    background: #fff;
+    padding: 0 5px;
+    color: #2980b9;
+}
+
+.input-field i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 18px;
+    color: #666;
+    font-size: 16px;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    justify-content: center;
+}
+
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+button i {
+    font-size: 16px;
+}
+
+button[type="submit"] {
+    background: #2980b9;
+    color: #fff;
+}
+
+button[type="button"] {
+    background: #6c757d;
+    color: #fff;
+}
+
+.exit-button {
+    background: #dc3545;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+    background: #2980b9;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background: #2471a3;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+footer {
+    text-align: center;
+    color: #fff;
+    margin-top: 30px;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+}

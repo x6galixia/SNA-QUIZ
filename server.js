@@ -18,6 +18,7 @@ const pool = new Pool({
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'));
 app.use(session({
     secret: 'secret_key',
     resave: false,

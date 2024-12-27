@@ -2,23 +2,33 @@
 <html>
 <head>
     <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>Welcome, Student!</h1>
-    <h2>Available Quizzes</h2>
-    <ul>
-        <% quizzes.forEach(quiz => { %>
-            <li>
-                <%= quiz.title %>
-                <% if (attemptedQuizzes.has(quiz.id)) { %>
-                    <a href="/quiz/<%= quiz.id %>/retake">Retake Quiz</a>
-                <% } else { %>
-                    <a href="/quiz/<%= quiz.id %>">Take Quiz</a>
-                <% } %>
-            </li>
-        <% }) %>
-    </ul>
-
-    <a href="/logout">Logout</a>
+    <header>
+        <h1>Welcome, Student!</h1>
+    </header>
+    <div class="container">
+        <h2>Available Quizzes</h2>
+        <ul>
+            <% quizzes.forEach(quiz => { %>
+                <li>
+                    <span><%= quiz.title %></span>
+                    <% if (attemptedQuizzes.has(quiz.id)) { %>
+                        <a href="/quiz/<%= quiz.id %>/retake">Retake Quiz</a>
+                    <% } else { %>
+                        <a href="/quiz/<%= quiz.id %>">Take Quiz</a>
+                    <% } %>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+    <div class="logout">
+        <a href="/logout">Logout</a>
+    </div>
+    <footer>
+        &copy; 2024 Group 1 System & Network Administration. All Rights Reserved.
+    </footer>
 </body>
 </html>

@@ -2,23 +2,31 @@
 <html>
 <head>
     <title><%= quiz.title %></title>
+    <link rel="stylesheet" href="/css/quiz.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1><%= quiz.title %></h1>
-    <form action="/quiz/<%= quiz.id %>/submit" method="POST">
-        <% questions.forEach((question, index) => { %>
-            <div>
-                <p><%= question.question_text %></p>
-                <label><input type="radio" name="question<%= index %>" value="A"> <%= question.option_a %></label><br>
-                <label><input type="radio" name="question<%= index %>" value="B"> <%= question.option_b %></label><br>
-                <label><input type="radio" name="question<%= index %>" value="C"> <%= question.option_c %></label><br>
-                <label><input type="radio" name="question<%= index %>" value="D"> <%= question.option_d %></label><br>
-            </div>
-        <% }) %>
-        <button type="submit">Submit</button>
-    </form>    
-
-    <a href="/student/dashboard">Back to Dashboard</a>
-    <a href="/logout">Logout</a>
+    <header>
+        <h1><%= quiz.title %></h1>
+    </header>
+    <div class="container">
+        <form action="/quiz/<%= quiz.id %>/submit" method="POST">
+            <% questions.forEach((question, index) => { %>
+                <div>
+                    <p><%= question.question_text %></p>
+                    <label><input type="radio" name="question<%= index %>" value="A"> <%= question.option_a %></label>
+                    <label><input type="radio" name="question<%= index %>" value="B"> <%= question.option_b %></label>
+                    <label><input type="radio" name="question<%= index %>" value="C"> <%= question.option_c %></label>
+                    <label><input type="radio" name="question<%= index %>" value="D"> <%= question.option_d %></label>
+                </div>
+            <% }) %>
+            <button type="submit">Submit</button>
+        </form>
+        <a href="/student/dashboard">Back to Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+    <footer>
+        &copy; 2024 Group 1 System & Network Administration. All Rights Reserved.
+    </footer>
 </body>
 </html>
