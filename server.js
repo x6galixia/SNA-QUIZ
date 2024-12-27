@@ -64,56 +64,73 @@ app.post('/signup', async (req, res) => {
 app.get('/teacher/dashboard', async (req, res) => {
     if (req.session.role !== 'teacher') return res.redirect('/');
 
-    // Fetch all students
-    const students = await pool.query('SELECT * FROM users WHERE role = $1', ['student']);
+    const teacherId = req.session.userId;
+
+    // Fetch the teacher's details
+    const teacher = await pool.query('SELECT fullname FROM users WHERE id = $1', [teacherId]);
 
     // Fetch all quizzes that the teacher has created
-    const quizzes = await pool.query('SELECT * FROM quizzes WHERE teacher_id = $1', [req.session.userId]);
+    const quizzes = await pool.query('SELECT * FROM quizzes WHERE teacher_id = $1', [teacherId]);
 
     // Fetch the latest score for each student and quiz
     const quizScores = await Promise.all(quizzes.rows.map(async (quiz) => {
         const scores = await pool.query(
             `SELECT scores.student_id, scores.score, scores.attempt_number, users.fullname 
-            FROM scores
-            JOIN users ON users.id = scores.student_id
-            WHERE scores.quiz_id = $1
-            ORDER BY scores.attempt_number DESC`,
+             FROM scores
+             JOIN users ON users.id = scores.student_id
+             WHERE scores.quiz_id = $1
+             ORDER BY scores.attempt_number DESC`,
             [quiz.id]
         );
 
         // Group the scores by student and only include the latest attempt
-        const latestScores = students.rows.map(student => {
-            const studentScore = scores.rows.find(score => score.student_id === student.id);
-            return {
-                student: student,
-                score: studentScore ? studentScore.score : null, // null if not attempted
-                attempt_number: studentScore ? studentScore.attempt_number : null
-            };
-        });
+        const latestScores = scores.rows.map(score => ({
+            student: { fullname: score.fullname },
+            score: score.score,
+            attempt_number: score.attempt_number
+        }));
 
         return { quiz, latestScores };
     }));
 
-    // Render the teacher dashboard with the quiz data and student scores
-    res.render('teacher_dashboard', { quizScores });
+    // Render the teacher dashboard with the quiz data and teacher name
+    res.render('teacher_dashboard', {
+        teacherName: teacher.rows[0]?.fullname || 'Teacher',
+        quizScores
+    });
 });
 
 app.get('/student/dashboard', async (req, res) => {
     if (req.session.role !== 'student') return res.redirect('/');
 
-    const quizzes = await pool.query('SELECT * FROM quizzes');
     const studentId = req.session.userId;
 
-    // Get the list of quizzes the student has already attempted
-    const attempts = await pool.query(
-        'SELECT quiz_id, MAX(attempt_number) AS last_attempt FROM scores WHERE student_id = $1 GROUP BY quiz_id',
+    // Fetch the student's details
+    const student = await pool.query('SELECT fullname FROM users WHERE id = $1', [studentId]);
+
+    // Fetch all quizzes
+    const quizzes = await pool.query('SELECT * FROM quizzes');
+
+    // Fetch the student's latest score for each quiz
+    const quizScores = await pool.query(
+        `SELECT scores.quiz_id, scores.score, MAX(scores.attempt_number) AS attempt_number
+         FROM scores
+         WHERE scores.student_id = $1
+         GROUP BY scores.quiz_id, scores.score`,
         [studentId]
     );
 
-    // Convert attempts to a Set for easier lookup
-    const attemptedQuizzes = new Set(attempts.rows.map(row => row.quiz_id));
+    // Map quiz scores for easy lookup
+    const scoresMap = new Map();
+    quizScores.rows.forEach(score => {
+        scoresMap.set(score.quiz_id, { score: score.score, attemptNumber: score.attempt_number });
+    });
 
-    res.render('student_dashboard', { quizzes: quizzes.rows, attemptedQuizzes });
+    res.render('student_dashboard', {
+        studentName: student.rows[0]?.fullname || 'Student',
+        quizzes: quizzes.rows,
+        scoresMap,
+    });
 });
 
 app.get('/teacher/add-quiz', (req, res) => {

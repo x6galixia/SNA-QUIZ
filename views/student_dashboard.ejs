@@ -7,7 +7,7 @@
 </head>
 <body>
     <header>
-        <h1>Welcome, Student!</h1>
+        <h1>Welcome, <%= studentName %>!</h1>
     </header>
     <div class="container">
         <h2>Available Quizzes</h2>
@@ -15,9 +15,11 @@
             <% quizzes.forEach(quiz => { %>
                 <li>
                     <span><%= quiz.title %></span>
-                    <% if (attemptedQuizzes.has(quiz.id)) { %>
+                    <% if (scoresMap.has(quiz.id)) { %>
+                        <span>Score: <%= scoresMap.get(quiz.id).score %> (Attempt <%= scoresMap.get(quiz.id).attemptNumber %>)</span>
                         <a href="/quiz/<%= quiz.id %>/retake">Retake Quiz</a>
                     <% } else { %>
+                        <span>Not Attempted</span>
                         <a href="/quiz/<%= quiz.id %>">Take Quiz</a>
                     <% } %>
                 </li>

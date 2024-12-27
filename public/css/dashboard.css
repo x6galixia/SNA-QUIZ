@@ -26,6 +26,42 @@ header {
     margin: 0 auto;
 }
 
+.delete_btn {
+    float: right;
+    width: 15% !important;
+    height: 25px !important;
+    background: #ff323d !important;
+    border: none !important;
+    border-radius: 6px !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.delete_btn:hover {
+    background: #2471a3 !important;
+}
+
+
+button {
+    width: 20%;
+    height: 45px;
+    background: #2980b9;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #2471a3;
+}
+
 h2 {
     color: #333;
     margin-bottom: 20px;
