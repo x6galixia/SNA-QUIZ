@@ -115,7 +115,6 @@ app.get('/student/dashboard', async (req, res) => {
     res.render('student_dashboard', { quizzes: quizzes.rows, attemptedQuizzes });
 });
 
-
 app.get('/teacher/add-quiz', (req, res) => {
     if (req.session.role !== 'teacher') return res.redirect('/');
     res.render('add_quiz'); // Add Quiz page
@@ -258,7 +257,6 @@ app.get('/logout', (req, res) => {
         res.redirect('/'); // Redirect to the login page after logging out
     });
 });
-
 
 // Start Server
 app.listen(port, () => {
