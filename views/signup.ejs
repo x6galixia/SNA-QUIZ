@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+</head>
+<body>
+    <h1>Signup</h1>
+    <form action="/signup" method="post">
+        <label for="fullname">Full Name:</label>
+        <input type="text" name="fullname" id="fullname" required>
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+        <label for="role">Role:</label>
+        <select name="role" id="role">
+            <option value="teacher">Teacher</option>
+            <option value="student">Student</option>
+        </select>
+        <label for="year_section">Year & Section (Students Only):</label>
+        <input type="text" name="year_section" id="year_section">
+        <button type="submit">Signup</button>
+    </form>
+    <p>Already have an account? <a href="/">Login here</a></p>
+</body>
+</html>

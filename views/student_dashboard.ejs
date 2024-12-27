@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, Student!</h1>
+    <h2>Available Quizzes</h2>
+    <ul>
+        <% quizzes.forEach(quiz => { %>
+            <li>
+                <%= quiz.title %>
+                <% if (attemptedQuizzes.has(quiz.id)) { %>
+                    <a href="/quiz/<%= quiz.id %>/retake">Retake Quiz</a>
+                <% } else { %>
+                    <a href="/quiz/<%= quiz.id %>">Take Quiz</a>
+                <% } %>
+            </li>
+        <% }) %>
+    </ul>
+
+    <a href="/logout">Logout</a>
+</body>
+</html>

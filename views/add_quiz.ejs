@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Quiz</title>
+</head>
+<body>
+    <h1>Add a New Quiz</h1>
+    <form action="/teacher/add-quiz" method="post">
+        <label for="title">Quiz Title:</label>
+        <input type="text" name="title" id="title" required>
+
+        <div id="questions">
+            <h3>Questions</h3>
+            <div class="question">
+                <label>Question Text:</label>
+                <input type="text" name="questions[0][question_text]" required>
+
+                <label>Option A:</label>
+                <input type="text" name="questions[0][option_a]" required>
+
+                <label>Option B:</label>
+                <input type="text" name="questions[0][option_b]" required>
+
+                <label>Option C:</label>
+                <input type="text" name="questions[0][option_c]" required>
+
+                <label>Option D:</label>
+                <input type="text" name="questions[0][option_d]" required>
+
+                <label>Correct Answer:</label>
+                <select name="questions[0][correct_answer]">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="button" id="add-question">Add Another Question</button>
+        <button type="submit">Save Quiz</button>
+    </form>
+
+    <script>
+        let questionIndex = 1;
+        document.getElementById('add-question').addEventListener('click', () => {
+            const questionsDiv = document.getElementById('questions');
+            const newQuestionDiv = document.createElement('div');
+            newQuestionDiv.classList.add('question');
+            newQuestionDiv.innerHTML = `
+                <label>Question Text:</label>
+                <input type="text" name="questions[${questionIndex}][question_text]" required>
+
+                <label>Option A:</label>
+                <input type="text" name="questions[${questionIndex}][option_a]" required>
+
+                <label>Option B:</label>
+                <input type="text" name="questions[${questionIndex}][option_b]" required>
+
+                <label>Option C:</label>
+                <input type="text" name="questions[${questionIndex}][option_c]" required>
+
+                <label>Option D:</label>
+                <input type="text" name="questions[${questionIndex}][option_d]" required>
+
+                <label>Correct Answer:</label>
+                <select name="questions[${questionIndex}][correct_answer]">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            `;
+            questionsDiv.appendChild(newQuestionDiv);
+            questionIndex++;
+        });
+    </script>
+</body>
+</html>
