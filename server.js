@@ -11,13 +11,14 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'education_db',
-    password: '12345',
-    port: 5433,
+    password: '1234',
+    port: 5432,
 });
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'));
 app.use(session({
     secret: 'secret_key',
     resave: false,
