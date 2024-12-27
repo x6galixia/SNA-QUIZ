@@ -1,0 +1,118 @@
+/* General styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 2rem;
+    width: 100%;
+    max-width: 700px;
+    margin: 1rem;
+}
+
+.page-title {
+    margin-bottom: 1.5rem;
+    color: #6a11cb;
+    font-size: 2rem;
+    text-align: center;
+}
+
+/* Score section */
+.score-section {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.score {
+    font-size: 2rem;
+    color: #6a11cb;
+    font-weight: bold;
+}
+
+/* Questions section */
+.questions-section {
+    margin-top: 1.5rem;
+}
+
+.questions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.question-item {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.question-text {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.options ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.options li {
+    margin: 0.25rem 0;
+}
+
+.answer {
+    margin-top: 0.5rem;
+}
+
+.correct {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.incorrect {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.correct-answer {
+    margin-top: 0.5rem;
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* Navigation */
+.navigation {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.btn-primary {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: #fff;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5a0bbf, #1a5ce3);
+}

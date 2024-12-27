@@ -1,24 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/student-dashboard.css"> <!-- Link to external CSS -->
 </head>
 <body>
-    <h1>Welcome, Student!</h1>
-    <h2>Available Quizzes</h2>
-    <ul>
-        <% quizzes.forEach(quiz => { %>
-            <li>
-                <%= quiz.title %>
-                <% if (attemptedQuizzes.has(quiz.id)) { %>
-                    <a href="/quiz/<%= quiz.id %>/retake">Retake Quiz</a>
-                <% } else { %>
-                    <a href="/quiz/<%= quiz.id %>">Take Quiz</a>
-                <% } %>
-            </li>
-        <% }) %>
-    </ul>
+    <div class="container">
+        <h1 class="page-title">Welcome, Student!</h1>
 
-    <a href="/logout">Logout</a>
+        <h2 class="section-title">Available Quizzes</h2>
+        <ul class="quiz-list">
+            <% quizzes.forEach(quiz => { %>
+                <li class="quiz-item">
+                    <span class="quiz-title"><%= quiz.title %></span>
+                    <% if (attemptedQuizzes.has(quiz.id)) { %>
+                        <a href="/quiz/<%= quiz.id %>/retake" class="btn-secondary">Retake Quiz</a>
+                    <% } else { %>
+                        <a href="/quiz/<%= quiz.id %>" class="btn-primary">Take Quiz</a>
+                    <% } %>
+                </li>
+            <% }) %>
+        </ul>
+
+        <div class="navigation">
+            <a href="/logout" class="btn-secondary">Logout</a>
+        </div>
+    </div>
 </body>
 </html>

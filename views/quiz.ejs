@@ -1,24 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= quiz.title %></title>
+    <link rel="stylesheet" href="/quiz.css"> <!-- Link to external CSS -->
 </head>
 <body>
-    <h1><%= quiz.title %></h1>
-    <form action="/quiz/<%= quiz.id %>/submit" method="POST">
-        <% questions.forEach((question, index) => { %>
-            <div>
-                <p><%= question.question_text %></p>
-                <label><input type="radio" name="question<%= index %>" value="A"> <%= question.option_a %></label><br>
-                <label><input type="radio" name="question<%= index %>" value="B"> <%= question.option_b %></label><br>
-                <label><input type="radio" name="question<%= index %>" value="C"> <%= question.option_c %></label><br>
-                <label><input type="radio" name="question<%= index %>" value="D"> <%= question.option_d %></label><br>
+    <div class="container">
+        <h1 class="page-title"><%= quiz.title %></h1>
+        <form action="/quiz/<%= quiz.id %>/submit" method="POST" class="quiz-form">
+            <% questions.forEach((question, index) => { %>
+                <div class="question-item">
+                    <p class="question-text"><%= question.question_text %></p>
+                    <div class="options">
+                        <label><input type="radio" name="question<%= index %>" value="A" required> <%= question.option_a %></label><br>
+                        <label><input type="radio" name="question<%= index %>" value="B"> <%= question.option_b %></label><br>
+                        <label><input type="radio" name="question<%= index %>" value="C"> <%= question.option_c %></label><br>
+                        <label><input type="radio" name="question<%= index %>" value="D"> <%= question.option_d %></label>
+                    </div>
+                </div>
+            <% }) %>
+            <div class="form-buttons">
+                <button type="submit" class="btn-primary">Submit</button>
             </div>
-        <% }) %>
-        <button type="submit">Submit</button>
-    </form>    
+        </form>
 
-    <a href="/student/dashboard">Back to Dashboard</a>
-    <a href="/logout">Logout</a>
+        <div class="navigation">
+            <a href="/student/dashboard" class="btn-secondary">Back to Dashboard</a>
+            <a href="/logout" class="btn-secondary">Logout</a>
+        </div>
+    </div>
 </body>
 </html>
