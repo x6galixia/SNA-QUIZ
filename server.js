@@ -11,8 +11,8 @@ const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'education_db',
-    password: '1234',
-    port: 5432,
+    password: '12345',
+    port: 5433,
 });
 
 // Middleware

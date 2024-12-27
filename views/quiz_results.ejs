@@ -2,30 +2,111 @@
 <html>
 <head>
     <title>Quiz Results</title>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f9fc;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f0f2f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        li strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #aaa;
+            font-size: 0.9em;
+        }
+    </style>
 </head>
 <body>
-    <h1>Quiz Results</h1>
+    <header>
+        <h1>Quiz Results</h1>
+    </header>
+    <div class="container">
+        <h2>Your Score: <%= score %>/<%= totalQuestions %></h2>
 
-    <h2>Your Score: <%= score %>/<%= totalQuestions %></h2>
+        <h2>Questions and Answers:</h2>
+        <ul>
+            <% resultDetails.forEach((result, index) => { %>
+                <li>
+                    <strong>Question <%= index + 1 %>:</strong> <%= result.question_text %><br>
+                    <strong>Options:</strong><br>
+                    A: <%= result.options.a %><br>
+                    B: <%= result.options.b %><br>
+                    C: <%= result.options.c %><br>
+                    D: <%= result.options.d %><br>
+                    <strong>Your Answer:</strong> <%= result.userAnswer %> (<%= result.isCorrect ? 'Correct' : 'Incorrect' %>)<br>
+                    <% if (!result.isCorrect) { %>
+                        <strong>Correct Answer:</strong> <%= result.correctAnswer %><br>
+                    <% } %>
+                </li>
+            <% }) %>
+        </ul>
 
-    <h2>Questions and Answers:</h2>
-    <ul>
-        <% resultDetails.forEach((result, index) => { %>
-            <li>
-                <strong>Question <%= index + 1 %>:</strong> <%= result.question_text %><br>
-                <strong>Options:</strong><br>
-                A: <%= result.options.a %><br>
-                B: <%= result.options.b %><br>
-                C: <%= result.options.c %><br>
-                D: <%= result.options.d %><br>
-                <strong>Your Answer:</strong> <%= result.userAnswer %> (<%= result.isCorrect ? 'Correct' : 'Incorrect' %>)<br>
-                <% if (!result.isCorrect) { %>
-                    <strong>Correct Answer:</strong> <%= result.correctAnswer %><br>
-                <% } %>
-            </li>
-        <% }) %>
-    </ul>
-
-    <a href="/student/dashboard">Back to Dashboard</a>
+        <a href="/student/dashboard">Back to Dashboard</a>
+    </div>
+    <footer>
+        &copy; 2024 Group 1 System & Network Administration. All Rights Reserved.
+    </footer>
 </body>
 </html>
