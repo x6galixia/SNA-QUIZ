@@ -4,6 +4,27 @@
     <title>Teacher Dashboard</title>
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .student-list {
+            display: none;
+        }
+
+        .toggle-btn {
+            cursor: pointer;
+            font-size: 20px;
+            color: #007BFF;
+            border: none;
+            background: none;
+            padding: 0;
+            transition: none; /* Remove hover transition */
+        }
+
+        .toggle-btn:hover {
+            color: #007BFF; /* No color change on hover */
+            background: none; /* No background change on hover */
+        }
+
+    </style>
 </head>
 <body>
     <header>
@@ -17,8 +38,12 @@
                 <form action="/teacher/delete-quiz/<%= quiz.id %>" method="POST" style="display:inline;">
                     <button class="delete_btn" type="submit" onclick="return confirm('Are you sure you want to delete this quiz?');">Delete</button>
                 </form>
+                <!-- Toggle Button for Students' List -->
+                <button class="toggle-btn" onclick="toggleStudentList('<%= quiz.id %>')">
+                    <i class="fas fa-plus" id="toggle-icon-<%= quiz.id %>"></i>
+                </button>
             </h3>
-            <ul>
+            <ul id="student-list-<%= quiz.id %>" class="student-list">
                 <% latestScores.forEach(({ student, score, attempt_number }) => { %>
                     <li>
                         <%= student.fullname %> - 
@@ -45,5 +70,23 @@
     <footer>
         &copy; 2024 Group 1 System & Network Administration. All Rights Reserved.
     </footer>
+
+    <script>
+        function toggleStudentList(quizId) {
+            const studentList = document.getElementById(`student-list-${quizId}`);
+            const toggleIcon = document.getElementById(`toggle-icon-${quizId}`);
+            
+            // Toggle visibility
+            if (studentList.style.display === "none" || studentList.style.display === "") {
+                studentList.style.display = "block";
+                toggleIcon.classList.remove("fa-plus");
+                toggleIcon.classList.add("fa-minus");
+            } else {
+                studentList.style.display = "none";
+                toggleIcon.classList.remove("fa-minus");
+                toggleIcon.classList.add("fa-plus");
+            }
+        }
+    </script>
 </body>
 </html>
